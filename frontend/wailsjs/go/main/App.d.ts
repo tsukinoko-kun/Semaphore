@@ -7,5 +7,3 @@ export function AddAccount(arg1:string,arg2:string,arg3:string,arg4:string,arg5:
 export function FirstPage():Promise<string>;
 
 export function GetConversations():Promise<Array<mail.Conversation>>;
-
-export function Greet(arg1:string):Promise<string>;

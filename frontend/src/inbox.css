@@ -1,0 +1,31 @@
+.sender {
+    display: block;
+}
+
+.sender::after {
+    content: ":";
+    margin-right: 0.5rem;
+}
+
+.content {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#inbox {
+    display: grid;
+    grid-template-columns: min(512px, 33vw) 1fr;
+    grid-template-rows: 1fr;
+    gap: 0;
+    grid-template-areas: "conversation_list content";
+}
+
+#conversation_list {
+    grid-area: conversation_list;
+}
+
+#content {
+    grid-area: content;
+}

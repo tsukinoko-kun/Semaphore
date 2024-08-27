@@ -10,8 +10,6 @@
 }
 
 body {
-    margin: 0;
-    font-family: "Noto Sans", "Segoe UI", sans-serif;
     user-select: none;
     cursor: default;
 }
@@ -59,11 +57,11 @@ label.input {
 }
 
 ::placeholder {
-    color: #3D3D3D !important;
+    color: #3d3d3d !important;
 }
 
 label.input > input {
-    margin-top: 0.25rem;
+    margin-top: 0.4rem;
     width: 100%;
     user-select: text;
 }
@@ -73,8 +71,8 @@ input.input {
     cursor: text;
     display: block;
     outline: none;
-    background: #0A0A0A;
-    color: #FFFFFF;
+    background: #0a0a0a;
+    color: #ffffff;
     padding: 0.5rem 1rem;
     border: 1px solid #242424;
     border-radius: 0.25rem;
@@ -83,7 +81,7 @@ input.input {
 label.input > input:focus,
 input.input:focus {
     border: 1px solid #828282;
-    box-shadow: 0 0 0 4px #3D3D3D;
+    box-shadow: 0 0 0 4px #3d3d3d;
 }
 
 label.input.multi {
@@ -99,7 +97,7 @@ label.input.multi > p {
 
 label.input.multi > span {
     padding: 0 1rem;
-    margin-top: 0.25rem;
+    margin-top: 0.4rem;
     background-color: #000000;
     border: 1px solid #242424;
     display: flex;

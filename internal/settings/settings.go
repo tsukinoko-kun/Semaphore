@@ -119,11 +119,12 @@ func (s *Settings) Quit() {
 	wg := sync.WaitGroup{}
 	wg.Add(len(s.Account))
 	for _, a := range s.Account {
-		go func(a *mail.Account) {
+		go func(a *mail.Account, wg *sync.WaitGroup) {
+			defer wg.Done()
 			if err := a.Close(); err != nil {
 				log.Error("failed to close account "+a.DisplayName, "err", err)
 			}
-		}(a)
+		}(a, &wg)
 	}
 	wg.Wait()
 }

@@ -29,7 +29,6 @@ func main() {
 		},
 		BackgroundColour:         &options.RGBA{R: 0, G: 0, B: 0, A: 1},
 		OnStartup:                app.startup,
-		OnShutdown:               app.shutdown,
 		EnableDefaultContextMenu: false,
 		DragAndDrop: &options.DragAndDrop{
 			DisableWebViewDrop: true,

@@ -6,12 +6,14 @@ import (
 	"semaphore/internal/mail"
 	"semaphore/internal/settings"
 	"strconv"
+	"sync"
 )
 
 // App struct
 type App struct {
 	ctx context.Context
 	s   *settings.Settings
+	mu  sync.Mutex
 }
 
 // NewApp creates a new App application struct
@@ -31,18 +33,10 @@ func (a *App) startup(ctx context.Context) {
 	a.ctx = ctx
 }
 
-// shutdown is called after the frontend has been destroyed,
-// just before the application terminates.
-func (a *App) shutdown(ctx context.Context) {
-	a.s.Quit()
-}
-
-// Greet returns a greeting for the given name
-func (a *App) Greet(name string) string {
-	return fmt.Sprintf("Hello %s, It's show time!", name)
-}
-
 func (a *App) FirstPage() string {
+	a.mu.Lock()
+	defer a.mu.Unlock()
+
 	if a.s.ShowWelcome() {
 		return "/welcome"
 	} else if a.s.HasAccount() {
@@ -53,6 +47,9 @@ func (a *App) FirstPage() string {
 }
 
 func (a *App) AddAccount(displayName, email, password, server, port string) string {
+	a.mu.Lock()
+	defer a.mu.Unlock()
+
 	portNum, err := strconv.Atoi(port)
 	if err != nil {
 		return fmt.Sprintf("failed to convert port to number: %w", err)
@@ -77,5 +74,8 @@ func (a *App) AddAccount(displayName, email, password, server, port string) stri
 }
 
 func (a *App) GetConversations() []mail.Conversation {
+	a.mu.Lock()
+	defer a.mu.Unlock()
+
 	return a.s.GetConversations()
 }
