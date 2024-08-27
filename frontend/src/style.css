@@ -1,0 +1,141 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    background-color: #000000;
+    color: #a1a1a1;
+    accent-color: #6366f1;
+}
+
+body {
+    margin: 0;
+    font-family: "Noto Sans", "Segoe UI", sans-serif;
+    user-select: none;
+    cursor: default;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: white;
+    font-weight: bold;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+}
+
+@font-face {
+    font-family: "Noto Sans";
+    font-style: normal;
+    font-weight: 100 900;
+    src: url("assets/fonts/NotoSans.ttf") format("truetype-variations");
+}
+
+@font-face {
+    font-family: "Noto Sans";
+    font-style: italic;
+    font-weight: 100 900;
+    src: url("assets/fonts/NotoSans-Italic.ttf") format("truetype-variations");
+}
+
+::selection {
+    background-color: #4f46e5;
+    color: #ffffff;
+}
+
+#root {
+    height: 100vh;
+}
+
+label.input {
+    display: block;
+}
+
+::placeholder {
+    color: #3D3D3D !important;
+}
+
+label.input > input {
+    margin-top: 0.25rem;
+    width: 100%;
+    user-select: text;
+}
+
+label.input > input,
+input.input {
+    cursor: text;
+    display: block;
+    outline: none;
+    background: #0A0A0A;
+    color: #FFFFFF;
+    padding: 0.5rem 1rem;
+    border: 1px solid #242424;
+    border-radius: 0.25rem;
+}
+
+label.input > input:focus,
+input.input:focus {
+    border: 1px solid #828282;
+    box-shadow: 0 0 0 4px #3D3D3D;
+}
+
+label.input.multi {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+label.input.multi > p {
+    display: block;
+    width: 100%;
+}
+
+label.input.multi > span {
+    padding: 0.5rem 1rem;
+    margin-top: 0.25rem;
+    background-color: #000000;
+    border: 1px solid #242424;
+}
+
+label.input.multi > input {
+    flex: 1;
+}
+
+label.input.multi > input:first-of-type {
+    border-right: none;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+label.input.multi > input:last-of-type {
+    border-left: none;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+label.input.multi > input:not(:first-of-type):not(:last-of-type) {
+    border-right: none;
+    border-left: none;
+}
+
+.btn {
+    background-color: #ededed;
+    color: #000000;
+    padding: 1rem 2rem;
+    text-align: center;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    outline: none;
+}
+
+.btn:hover {
+    background-color: #ccc;
+}
