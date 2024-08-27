@@ -31,6 +31,12 @@ func (a *App) startup(ctx context.Context) {
 	a.ctx = ctx
 }
 
+// shutdown is called after the frontend has been destroyed,
+// just before the application terminates.
+func (a *App) shutdown(ctx context.Context) {
+	a.s.Quit()
+}
+
 // Greet returns a greeting for the given name
 func (a *App) Greet(name string) string {
 	return fmt.Sprintf("Hello %s, It's show time!", name)
@@ -68,4 +74,8 @@ func (a *App) AddAccount(displayName, email, password, server, port string) stri
 	} else {
 		return ""
 	}
+}
+
+func (a *App) GetConversations() []mail.Conversation {
+	return a.s.GetConversations()
 }

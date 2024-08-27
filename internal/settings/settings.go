@@ -4,12 +4,12 @@ import (
 	"errors"
 	"fmt"
 	"github.com/BurntSushi/toml"
-	"github.com/emersion/go-imap"
+	"github.com/charmbracelet/log"
 	"github.com/zalando/go-keyring"
-	"net"
 	"os"
 	"path/filepath"
 	"semaphore/internal/mail"
+	"sync"
 )
 
 const (
@@ -108,27 +108,22 @@ func (s *Settings) HasAccount() bool {
 	return len(s.Account) > 0
 }
 
-func (s *Settings) Quit() error {
+func (s *Settings) Quit() {
 	if !s.HasAccount() {
-		return nil
+		return
 	}
 	if err := s.Save(); err != nil {
-		return err
+		log.Error("failed to save settings", "err", err)
 	}
+
+	wg := sync.WaitGroup{}
+	wg.Add(len(s.Account))
 	for _, a := range s.Account {
-		c, _ := a.Client()
-		if c.State()&imap.LogoutState == 0 {
-			if err := c.Logout(); err != nil {
-				return errors.Join(fmt.Errorf("failed to logout from %s", a.DisplayName), err)
+		go func(a *mail.Account) {
+			if err := a.Close(); err != nil {
+				log.Error("failed to close account "+a.DisplayName, "err", err)
 			}
-		}
-		if err := c.Close(); err != nil {
-			if errors.Is(err, net.ErrClosed) || err.Error() == "imap: connection closed" {
-				// ignore
-				continue
-			}
-			return errors.Join(fmt.Errorf("failed to close connection to %s", a.DisplayName), err)
-		}
+		}(a)
 	}
-	return nil
+	wg.Wait()
 }

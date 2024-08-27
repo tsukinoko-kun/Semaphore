@@ -3,7 +3,9 @@ package mail
 import (
 	"errors"
 	"fmt"
+	"github.com/emersion/go-imap"
 	"github.com/emersion/go-imap/client"
+	"net"
 )
 
 type Account struct {
@@ -35,4 +37,23 @@ func (a *Account) Client() (*client.Client, error) {
 
 func (a *Account) Address() string {
 	return fmt.Sprintf("%s:%d", a.Server, a.Port)
+}
+
+func (a *Account) Close() error {
+	if a.c == nil {
+		return nil
+	}
+	if a.c.State()&imap.LogoutState == 0 {
+		if err := a.c.Logout(); err != nil {
+			return errors.Join(fmt.Errorf("failed to logout from %s", a.DisplayName), err)
+		}
+	}
+	if err := a.c.Close(); err != nil {
+		if errors.Is(err, net.ErrClosed) || err.Error() == "imap: connection closed" {
+			// ignore
+			return nil
+		}
+		return errors.Join(fmt.Errorf("failed to close connection to %s", a.DisplayName), err)
+	}
+	return nil
 }
