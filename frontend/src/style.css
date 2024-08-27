@@ -6,6 +6,7 @@
     background-color: #000000;
     color: #a1a1a1;
     accent-color: #6366f1;
+    color-scheme: dark;
 }
 
 body {
@@ -97,29 +98,29 @@ label.input.multi > p {
 }
 
 label.input.multi > span {
-    padding: 0.5rem 1rem;
+    padding: 0 1rem;
     margin-top: 0.25rem;
     background-color: #000000;
     border: 1px solid #242424;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 label.input.multi > input {
     flex: 1;
 }
 
-label.input.multi > input:first-of-type {
-    border-right: none;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
+label.input.multi > *:nth-child(2) {
+    border-radius: 0.25rem 0 0 0.25rem;
 }
 
-label.input.multi > input:last-of-type {
-    border-left: none;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
+label.input.multi > *:last-child {
+    border-radius: 0 0.25rem 0.25rem 0;
 }
 
-label.input.multi > input:not(:first-of-type):not(:last-of-type) {
+label.input.multi > input:not(:nth-child(2)):not(:last-child),
+label.input.multi > span:not(:nth-child(2)):not(:last-child) {
     border-right: none;
     border-left: none;
 }

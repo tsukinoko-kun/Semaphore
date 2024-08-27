@@ -10,6 +10,10 @@ export function FirstPage() {
   return window['go']['main']['App']['FirstPage']();
 }
 
+export function GetConversations() {
+  return window['go']['main']['App']['GetConversations']();
+}
+
 export function Greet(arg1) {
   return window['go']['main']['App']['Greet'](arg1);
 }

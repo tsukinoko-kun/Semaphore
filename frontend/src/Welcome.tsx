@@ -10,6 +10,5 @@ export default function Welcome() {
             <Envelope className="inline mr-4"/>
             Login
         </Link>
-
     </div>;
 }

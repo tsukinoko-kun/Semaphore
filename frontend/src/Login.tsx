@@ -1,6 +1,7 @@
 import {useState} from "react";
 import {AddAccount} from "../wailsjs/go/main/App";
 import {useNavigate} from "react-router-dom";
+import {Eye, EyeSlash} from "react-bootstrap-icons";
 
 export default function Login() {
     const navigate = useNavigate()
@@ -9,6 +10,8 @@ export default function Login() {
     const [password, setPassword] = useState("")
     const [server, setServer] = useState("")
     const [port, setPort] = useState("")
+
+    const [pwdVis, setPwdVis] = useState(false)
 
     const [error, setError] = useState("")
 
@@ -56,16 +59,19 @@ export default function Login() {
                     }}
                 />
             </label>
-            <label className="input">
-                Password
+            <label className="input multi">
+                <p>Password</p>
                 <input
-                    type="password"
+                    type={pwdVis ? "text" : "password"}
                     value={password}
                     required
                     onChange={(ev) => {
                         setPassword(ev.target.value)
                     }}
                 />
+                <span onClick={() => setPwdVis(!pwdVis)} className="cursor-pointer">
+                {pwdVis ? <EyeSlash/> : <Eye/>}
+                </span>
             </label>
             <label className="input multi">
                 <p>Server</p>
