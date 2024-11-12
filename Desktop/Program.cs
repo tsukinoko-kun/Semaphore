@@ -1,5 +1,6 @@
 ﻿using Avalonia;
 using System;
+using System.Runtime.InteropServices;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Desktop;
@@ -35,5 +36,9 @@ class Program
     {
         services.AddSingleton<Core.Conn>();
         services.AddTransient<MainWindow>();
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+        {
+            services.AddSingleton<Core.IPasswd, Core.Keychain>();
+        }
     }
 }

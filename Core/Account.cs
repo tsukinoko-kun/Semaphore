@@ -29,7 +29,7 @@ public class Account : IDisposable
             _imap.Connect(host, imapPort, SecureSocketOptions.StartTlsWhenAvailable);
             _imap.Authenticate(username, password);
         }
-        catch (Exception ex)
+        catch
         {
             if (_smtp.IsConnected)
             {
@@ -41,7 +41,7 @@ public class Account : IDisposable
                 _imap.Disconnect(true);
             }
 
-            throw ex;
+            throw;
         }
     }
 
