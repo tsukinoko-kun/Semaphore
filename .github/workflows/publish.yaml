@@ -1,0 +1,41 @@
+---
+name: Publish
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+permissions:
+  contents: write
+  packages: write
+
+jobs:
+  build-mac:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - name: Install dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet publish Desktop -c Release -r osx-arm64 --self-contained=true
+      - name: Package
+        run: |
+          mkdir -p pub
+          mv Desktop/bin/Release/net8.0/osx-arm64/publish/Desktop pub/Semaphore
+          cd pub
+          zip -9 -r Semaphore.zip ./*
+          cd ..
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: pub/Semaphore.zip
+          asset_name: Semaphore_darwin_aarch64.zip
+          tag: ${{ github.ref }}
+          overwrite: true
